@@ -44,3 +44,4 @@ jobs:
           tf_actions_comment: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_VAR_GCP_BILLING_ACCOUNT_ID: ${{ secrets.GCP_BILLING_ACCOUNT }}
