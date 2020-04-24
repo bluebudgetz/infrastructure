@@ -11,7 +11,8 @@ jobs:
     env:
       GOOGLE_CREDENTIALS: "${{ secrets.GCP_GITHUB_SA_KEY }}"
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
       - name: fmt
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -44,4 +45,4 @@ jobs:
           tf_actions_comment: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TF_VAR_GCP_BILLING_ACCOUNT_ID: ${{ secrets.GCP_BILLING_ACCOUNT }}
+          TF_VAR_gcp_billing_account_id: ${{ secrets.GCP_BILLING_ACCOUNT }}
