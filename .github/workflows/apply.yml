@@ -8,6 +8,8 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Apply
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_CREDENTIALS: "${{ secrets.GCP_GITHUB_SA_KEY }}"
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/terraform-github-actions@master
