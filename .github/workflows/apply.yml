@@ -42,7 +42,7 @@ jobs:
           tf_actions_subcommand: plan
           tf_actions_comment: true
       - run: echo WILL APPLY CHANGES!
-        if: steps.plan.outputs.tf_actions_plan_has_changes
+        if: steps.plan.outputs.tf_actions_plan_has_changes && github.ref == 'refs/heads/master'
 
 #      TODO: only run "apply" in 'master' branch
 #      - name: apply
