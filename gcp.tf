@@ -40,6 +40,6 @@ resource "google_project_service" "prod-cloudresourcemanager" {
 
 resource "google_project_iam_member" "binding" {
   project = google_project.prod.project_id
-  role   = "roles/resourcemanager.projectIamAdmin"
-  member = "serviceAccount:github@bluebudgetz-prod.iam.gserviceaccount.com"
+  role    = "roles/resourcemanager.projectIamAdmin"
+  member  = "serviceAccount:github@bluebudgetz-prod.iam.gserviceaccount.com"
 }
