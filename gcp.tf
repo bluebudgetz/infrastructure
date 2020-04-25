@@ -37,9 +37,3 @@ resource "google_project_service" "prod-cloudresourcemanager" {
   project = google_project.prod.project_id
   service = "cloudresourcemanager.googleapis.com"
 }
-
-resource "google_project_iam_member" "binding" {
-  project = google_project.prod.project_id
-  role    = "roles/resourcemanager.projectIamAdmin"
-  member  = "serviceAccount:github@bluebudgetz-prod.iam.gserviceaccount.com"
-}
