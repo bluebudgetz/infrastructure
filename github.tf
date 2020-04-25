@@ -42,7 +42,7 @@ resource "github_repository" "gate" {
 }
 
 resource "github_actions_secret" "gate_dockerhub_access_token" {
-  repository       = "gate"
-  secret_name      = "DOCKERHUB_ACCESS_TOKEN"
-  plaintext_value  = var.dockerhub_access_token
+  repository      = "gate"
+  secret_name     = "DOCKERHUB_ACCESS_TOKEN"
+  plaintext_value = var.dockerhub_access_token
 }
