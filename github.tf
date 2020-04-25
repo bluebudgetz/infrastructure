@@ -23,7 +23,7 @@ resource "github_repository" "infrastructure" {
   allow_rebase_merge     = false
   delete_branch_on_merge = true
   has_downloads          = false
-  topics                 = ["infrastructure"]
+  topics                 = ["infrastructure", "terraform"]
 }
 
 resource "github_repository" "gate" {
