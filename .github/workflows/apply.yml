@@ -12,7 +12,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GOOGLE_CREDENTIALS: "${{ secrets.GCP_GITHUB_SA_KEY }}"
       TERRAFORM_VERSION: "0.12.24"
-      TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
+      TF_VAR_github_token: ${{ secrets.BLUEBUDGETZ_BOT_TOKEN }}
       TF_VAR_gcp_billing_account_id: ${{ secrets.GCP_BILLING_ACCOUNT }}
     steps:
       - uses: actions/checkout@v2
