@@ -26,6 +26,18 @@ resource "github_repository" "infrastructure" {
   topics                 = ["infrastructure", "terraform"]
 }
 
+resource "github_branch_protection" "infrastructure-master" {
+  repository             = github_repository.infrastructure.name
+  branch                 = "master"
+  enforce_admins         = false
+  require_signed_commits = false
+
+  required_status_checks {
+    strict   = true
+    contexts = ["Apply"]
+  }
+}
+
 resource "github_repository" "gate" {
   name                   = "gate"
   description            = "Bluebudgetz API gateway"
@@ -39,6 +51,18 @@ resource "github_repository" "gate" {
   delete_branch_on_merge = true
   has_downloads          = false
   topics                 = ["api", "go", "golang"]
+}
+
+resource "github_branch_protection" "gate-master" {
+  repository             = github_repository.gate.name
+  branch                 = "master"
+  enforce_admins         = false
+  require_signed_commits = false
+
+  required_status_checks {
+    strict   = true
+    contexts = ["Build", "coverage/coveralls"]
+  }
 }
 
 resource "github_actions_secret" "gate_dockerhub_access_token" {
