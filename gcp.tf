@@ -39,7 +39,7 @@ resource "google_project_service" "prod-cloudresourcemanager" {
 }
 
 resource "google_project_iam_member" "binding" {
-  org_id = data.google_organization.kfirfamily.id
+  project = google_project.prod.project_id
   role   = "roles/resourcemanager.projectIamAdmin"
   member = "serviceAccount:github@bluebudgetz-prod.iam.gserviceaccount.com"
 }
