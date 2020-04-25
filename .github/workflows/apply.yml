@@ -1,15 +1,50 @@
 name: Apply
 on:
   push:
+  pull_request:
+    types: [opened, reopened, synchronize]
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Apply
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GOOGLE_CREDENTIALS: "${{ secrets.GCP_GITHUB_SA_KEY }}"
+      TERRAFORM_VERSION: "0.12.24"
+      TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
+      TF_VAR_gcp_billing_account_id: ${{ secrets.GCP_BILLING_ACCOUNT }}
     steps:
-      - uses: hashicorp/terraform-github-actions@master
+      - uses: actions/checkout@v2
+      - name: fmt
+        uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
-          tf_actions_subcommand: 'fmt'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
+          tf_actions_subcommand: fmt
+          tf_actions_comment: true
+      - name: init
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
+          tf_actions_subcommand: init
+          tf_actions_comment: true
+      - name: validate
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
+          tf_actions_subcommand: validate
+          tf_actions_comment: true
+      - id: plan
+        name: plan
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
+          tf_actions_subcommand: plan
+          tf_actions_comment: true
+      - name: apply
+        if: steps.plan.outputs.tf_actions_plan_has_changes && github.ref == 'refs/heads/master'
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
+          tf_actions_subcommand: apply
+          tf_actions_comment: true
