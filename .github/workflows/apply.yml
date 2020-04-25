@@ -9,7 +9,10 @@ jobs:
     name: Apply
     runs-on: ubuntu-latest
     env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GOOGLE_CREDENTIALS: "${{ secrets.GCP_GITHUB_SA_KEY }}"
+      TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
+      TF_VAR_gcp_billing_account_id: ${{ secrets.GCP_BILLING_ACCOUNT }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -19,30 +22,21 @@ jobs:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: fmt
           tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: init
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: init
           tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: validate
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: validate
           tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: plan
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: plan
           tf_actions_comment: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TF_VAR_gcp_billing_account_id: ${{ secrets.GCP_BILLING_ACCOUNT }}
