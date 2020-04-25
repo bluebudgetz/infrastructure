@@ -34,9 +34,20 @@ jobs:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: validate
           tf_actions_comment: true
-      - name: plan
+      - id: plan
+        name: plan
         uses: hashicorp/terraform-github-actions@master
         with:
           tf_actions_version: 0.12.24
           tf_actions_subcommand: plan
           tf_actions_comment: true
+      - run: echo WILL APPLY CHANGES!
+        if: steps.plan.outputs.tf_actions_plan_has_changes
+
+#      TODO: only run "apply" in 'master' branch
+#      - name: apply
+#        uses: hashicorp/terraform-github-actions@master
+#        with:
+#          tf_actions_version: 0.12.24
+#          tf_actions_subcommand: apply
+#          tf_actions_comment: true
