@@ -16,11 +16,6 @@ provider "google-beta" {
   zone    = "europe-west3-b"
 }
 
-data "google_organization" "kfirfamily" {
-  provider = google-beta
-  domain   = "kfirfamily.com"
-}
-
 resource "google_project" "prod" {
   provider        = google-beta
   project_id      = "bluebudgetz-prod"
