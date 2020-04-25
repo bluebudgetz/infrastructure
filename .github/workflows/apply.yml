@@ -11,6 +11,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GOOGLE_CREDENTIALS: "${{ secrets.GCP_GITHUB_SA_KEY }}"
+      TERRAFORM_VERSION: "0.12.24"
       TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
       TF_VAR_gcp_billing_account_id: ${{ secrets.GCP_BILLING_ACCOUNT }}
     steps:
@@ -18,26 +19,26 @@ jobs:
       - name: fmt
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
           tf_actions_subcommand: fmt
           tf_actions_comment: true
       - name: init
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
           tf_actions_subcommand: init
           tf_actions_comment: true
       - name: validate
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
           tf_actions_subcommand: validate
           tf_actions_comment: true
       - id: plan
         name: plan
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.24
+          tf_actions_version: ${{ env['TERRAFORM_VERSION'] }}
           tf_actions_subcommand: plan
           tf_actions_comment: true
       - run: echo WILL APPLY CHANGES!
